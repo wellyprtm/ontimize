@@ -1,0 +1,12 @@
+<o-form-layout-manager mode="tab" title="CUSTOMERS"  separator="," attr="o-form-layout-customer-home"
+  title-data-origin="customers_form_edit">
+  <div fxFill fxLayout="column" fxLayoutAlign="start">
+    <o-table attr="starships" entity="starships" columns="name;model;manufacturer;starship_class;crew;passengers"
+  visible-columns="name;model;manufacturer;starship_class;passengers"  pageable="yes" quick-filter="no" insert-button="no" fxFlex
+  service-type="starsWars">
+
+
+      <o-table-paginator page-size-options="24;48;96"></o-table-paginator>
+    </o-table>
+  </div>
+</o-form-layout-manager>
