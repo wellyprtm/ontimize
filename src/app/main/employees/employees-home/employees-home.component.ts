@@ -40,6 +40,26 @@ export class EmployeesHomeComponent {
     }
   }
 
+  public createFilter1(values: Array<{attr: string, value: any}>): CustomExpression {
+    const filters: CustomExpression = {};
+    const maps = new Map();
+    values.forEach(fil => {
+      if (fil.value) {
+        console.log(fil);
+        maps.set(fil.attr, fil.value);
+      }
+    });
+
+    // Build complex expression
+    if (maps) {
+      filters.field = maps;
+      console.log(filters);
+      return filters;
+    } else {
+      return null;
+    }
+  }
+
   public getImageSrc(base64: string): any {
     return base64 ? this.sanitizer.bypassSecurityTrustResourceUrl('data:image/*;base64,' + base64) : './assets/images/no-image-transparent.png';
   }
@@ -52,4 +72,7 @@ export class EmployeesHomeComponent {
     });
   }
 
+}
+export interface CustomExpression {
+  field?: Map<string, Object>;
 }

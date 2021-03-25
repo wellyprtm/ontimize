@@ -55,6 +55,7 @@ export const MENU_CONFIG: MenuRootItem[] = [
       { id: 'about', name: 'ABOUT', route: '/main/about', icon: 'help_outline' }
     ]
   },
+  { id: 'user-management', name: 'User Management', icon: 'people', route: '/main/user-management' },
   { id: 'logout', name: 'LOGOUT', route: '/login', icon: 'power_settings_new', confirm: 'yes' }
 ];
 
