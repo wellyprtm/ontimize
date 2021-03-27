@@ -1,31 +1,26 @@
-<o-form #formFilter editable-detail="no" show-header="no">
 
-  <o-row layout-gap="18px">
-    <o-text-input attr="username" read-only="no" label="Username"></o-text-input>
-    <o-text-input attr="realName" label="Real Name" read-only="no"></o-text-input>
-  </o-row>
-  <o-row layout-gap="18px">
-    <o-combo attr="role" label="Role" [static-data]="roleList" value-column="value"
-      columns="label;value" visible-columns="label" read-only="false"></o-combo>
-    <o-combo attr="active" label="Active" [static-data]="yesNoList" value-column="value"
-        columns="label;value" visible-columns="label" read-only="false"></o-combo>
-  </o-row>
-  <o-row layout-gap="18px">
-    <o-row layout-align="start center" fxFlex="33">
-      <o-button attr="filter" [oFilterBuilderQuery]="filterBuilder" type="RAISED" label="Filter"></o-button>
-    </o-row>
-  </o-row>
-  <o-filter-builder #filterBuilder attr="thefilter"
-    filters="username;realName"
-    [target]="table" [expression-builder]="createFilter1"></o-filter-builder>
-</o-form>
-<o-form-layout-manager mode="dialog" title="User Management" separator="," attr="o-form-layout-user-management-home"
+<o-form-layout-manager mode="tab" title="User Management" separator="," attr="o-form-layout-user-management-home"
   title-data-origin="user_management_form_edit">
+  <o-form #formFilter editable-detail="no" show-header="no">
 
+    <o-row layout-gap="18px">
+      <o-text-input attr="username" read-only="no" label="Username"></o-text-input>
+      <o-text-input attr="realName" label="Real Name" read-only="no"></o-text-input>
+      <o-combo attr="role" label="Role" [static-data]="roleList" value-column="value"
+        columns="label;value" visible-columns="label" read-only="false"></o-combo>
+      <o-combo attr="active" label="Active" [static-data]="yesNoList" value-column="value"
+          columns="label;value" visible-columns="label" read-only="false"></o-combo>
+      <o-button attr="filter" [oFilterBuilderQuery]="filterBuilder" type="RAISED" label="Filter" layout-padding>
+      </o-button>
+    </o-row>
+    <o-filter-builder #filterBuilder attr="thefilter"
+      filters="username;realName;role;active"
+      [target]="tableUserManagement" [expression-builder]="createFilter1"></o-filter-builder>
+  </o-form>
   <div fxFill fxLayout="column" fxLayoutAlign="start">
-    <o-table fxFlex attr="user-management" title="User Management" service-type="userService" entity="users" keys="id" columns="id;role;realName;active;username"
-      visible-columns="username;realName;role;active" sort-columns="username" query-rows="10" quick-filter="no"
-      row-height="medium" select-all-checkbox="true" pageable="yes" fixed-header="yes">
+    <o-table #tableUserManagement fxFlex attr="user-management" title="User Management" service-type="userService" entity="users" keys="id" columns="id;role;realName;active;username"
+      visible-columns="username;realName;role;active" sort-columns="username" query-rows="10" quick-filter="no" delete-button="no"
+      row-height="medium" select-all-checkbox="true" pageable="yes" fixed-header="yes" fixed-footer="yes">
 
       <o-table-columns-filter columns="username;realName"></o-table-columns-filter>
       <o-table-column attr="username" title="Username"></o-table-column>
@@ -36,7 +31,7 @@
         <o-table-cell-renderer-boolean render-true-value="check_circle" render-false-value="highlight_off" render-type="icon" boolean-type="boolean">
         </o-table-cell-renderer-boolean>
       </o-table-column>
-      <o-table-paginator page-size="10"></o-table-paginator>
+      <o-table-paginator page-size="5"></o-table-paginator>
     </o-table>
   </div>
   <o-form-layout-dialog-options width="400px" height="500px"

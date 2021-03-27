@@ -13,7 +13,6 @@ export class UserManagementResponseAdapter implements ServiceResponseAdapter<Bas
     const sqlTypes = {};
     let startRecordIndex = 0;
     let totalQueryRecordsNumber = 0;
-    console.log(resp.body);
     // Adapt the data received from the service
     if (resp.ok) {
       code = 0;

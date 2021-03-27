@@ -1,10 +1,11 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable, OntimizeBaseService, OntimizeEEService, ServiceResponse, Util } from 'ontimize-web-ngx';
 import { Subscriber } from 'rxjs';
+import { CustomExpression } from '../main/employees/employees-home/employees-home.component';
 import { UserManagementResponseAdapter } from './user-management-response-adapter.service';
 
 @Injectable()
-export class UserManagementService extends OntimizeEEService {
+export class UserManagementService extends OntimizeBaseService {
 
   private baseUrl: string;
 
@@ -33,25 +34,31 @@ export class UserManagementService extends OntimizeEEService {
     offset = (Util.isDefined(offset)) ? offset : this.offset;
 
     // Calculate page
+    console.log(orderby)
     let page = 1;
     if (Util.isDefined(offset)) {
       page = Math.trunc(offset / 10) + 1;
     }
-    console.log(kv);
-    console.log(av);
     let urlParam = '';
-    if (Util.isDefined(kv)) {
+    if (Object.keys(kv).length) {
       if (kv instanceof Map) {
         urlParam = Object.keys(kv).map(key => key + '=' + kv[key]).join('&');
       } else {
-        const a = kv as Map<string, Object>;
-        console.log(a.values);
-        urlParam = Object.keys(kv.valueOf()).map(key => key + '=' + kv[key]).join('&');
-        console.log(Object.keys(kv.valueOf()));
+        let map = new Object();
+        Object.keys(kv).map(key => map = kv[key]);
+        map = (map as CustomExpression).field;
+        urlParam = Object.keys(map).map(k => k + '=' + map[k]).join('&');
       }
     }
-    if (Util.isDefined(av)) {
-      urlParam = Object.keys(kv).map(key => key + '=' + kv[key]).join('&');
+
+    if (urlParam) {
+      urlParam = '&' + urlParam;
+    }
+
+    if (orderby.length) {
+      for (const idx of orderby) {
+        urlParam = urlParam + '&sorts=' + idx['columnName'] + '-' + (idx['ascendent'] ? 'asc' : 'desc');
+      }
     }
 
     const fullUrl = this.baseUrl + entity + '?' + 'page=' + page + '&pageSize=' + pagesize + urlParam;
@@ -83,9 +90,22 @@ export class UserManagementService extends OntimizeEEService {
     const body = av as User;
     body.id = required.id;
     body.version = required.version;
-    body.username = required.username;
-    body.role = required.role;
-    body.active = required.active;
+
+    if (!body.username) {
+      body.username = required.username;
+    }
+
+    if (!body.role) {
+      body.role = required.role;
+    }
+
+    if (!body.realName) {
+      body.realName = required.realName;
+    }
+
+    if (!Util.isDefined(body.active)) {
+      body.active = required.active;
+    }
 
     return this.doRequest({
       method: 'PUT',

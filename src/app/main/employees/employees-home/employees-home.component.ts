@@ -74,5 +74,5 @@ export class EmployeesHomeComponent {
 
 }
 export interface CustomExpression {
-  field?: Map<string, Object>;
+  field?: Object;
 }

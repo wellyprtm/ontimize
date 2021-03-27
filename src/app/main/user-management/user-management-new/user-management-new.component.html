@@ -1,12 +1,13 @@
-<o-form attr="user_management_form_edit" service-type="userService" entity="users" keys="id;version;username;role;active" show-header="yes" header-actions="R;U;D;I"
-  #oForm class="standalone-form-container">
+<o-form attr="user_management_form_edit" service-type="userService" entity="users" keys="id;version;username;role;active;realName" show-header="yes" header-actions="R;U;D;I"
+  #oForm class="standalone-form-container" (onInsertMode)="checkInsert()" (onDataLoaded)="checkUpdate()">
 
   <o-row attr="row1" layout-align="center center">
     <!-- <o-column title="USER_DATA" layout-align="start stretch" fxLayoutGap="86px" fxFlex="150" layout-padding> -->
       <div fxLayout="column" fxLayoutGap="30px" fxFlex="150" class="accounts-filters">
       <o-text-input auto-complete="false" attr="username" label="Username"></o-text-input>
       <o-text-input attr="realName" label="Real Name"></o-text-input>
-      <o-password-input auto-complete="new- password" attr="password" label="Password"></o-password-input>
+      <o-checkbox attr="check1" *ngIf="showChangesPasswordCheckbox" label="Ganti Password" read-only="no" (onValueChange)="changesCheck($event)"></o-checkbox>
+      <o-password-input *ngIf="isChangePassword" auto-complete="new- password" attr="password" label="Password"></o-password-input>
       <o-combo attr="role" label="Role" [static-data]="listRole" value-column="value"
         columns="label;value" visible-columns="label" read-only="false"></o-combo>
       <o-combo attr="active" label="Active" [static-data]="listYesNo" value-column="value"

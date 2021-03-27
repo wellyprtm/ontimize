@@ -22,18 +22,16 @@ export class UserManagementHomeComponent {
   }
   public createFilter1(values: Array<{attr: string, value: any}>): CustomExpression {
     const filters: CustomExpression = {};
-    const maps = new Map();
+    const maps = new Object();
     values.forEach(fil => {
       if (fil.value) {
-        console.log(fil);
-        maps.set(fil.attr, fil.value);
+        maps[fil.attr] = fil.value;
       }
     });
 
     // Build complex expression
     if (maps) {
       filters.field = maps;
-      console.log(filters);
       return filters;
     } else {
       return null;
